@@ -39,27 +39,36 @@ export default {
       focusState: false
     }
   },
+  watch:{
+    search () {
+      if (this.search === '') {
+        this.$store.dispatch('callMeteor', {
+          limit: 1000,
+          offset: 0,
+          page: 1
+        })
+      }
+    }
+  },
   methods: {
     resetFocus() {
       this.focusState = true
     },
     runQuery() {
-      this.validationMessage = ''
-      if (this.validator(this.search)) {
-        this.focusState = false
-        this.$store.dispatch('searchMeteor',
-        {
-          query:`$where=upper(name) like upper('%25${this.search}%25')`
-        })
-      } else {
-        if(this.focusState) {
+      if (this.search === '') {
+        this.validationMessage = 'Hold On! Please type a meteor name!'
+        setTimeout(() => {
+          this.validationMessage = ''
           this.focusState = false
-          this.$store.dispatch('callMeteor', {
-            limit: 1000,
-            offset: 0
+        }, 5000)  
+      } else {
+        if (this.validator(this.search)) {
+          this.$store.dispatch('searchMeteor',
+          {
+            query:`$where=upper(name) like upper('%25${this.search}%25')`
           })
         } else {
-          this.validationMessage = 'Hold On! Please type a meteor name!'
+          this.validationMessage = 'Invalid search term!!! please try again!'
           setTimeout(() => {
             this.validationMessage = ''
             this.focusState = false
@@ -68,7 +77,8 @@ export default {
       }
     },
     validator(term) {
-      if (term === '') {
+      let patt = /^\w+$/
+      if (term === '' || patt.test(term) === false) {
         return false
       } else {
         return true

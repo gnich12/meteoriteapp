@@ -55,18 +55,6 @@
           {{ new Date(props.row.year).getFullYear() }}
         </b-table-column>
         <b-table-column
-          field="reclat"
-          label="RecLat"
-        >
-          {{ props.row.reclat }}
-        </b-table-column>
-        <b-table-column
-          field="reclong"
-          label="RecLong"
-        >
-          {{ props.row.reclong }}
-        </b-table-column>
-        <b-table-column
           field="geolocation"
           label="Latitude"
         >
@@ -103,11 +91,17 @@ export default {
   props: {
     meteor: {
       type: Array
+    },
+    searchState: {
+      type: Object
     }
   },
   computed: {
     dataLimit() {
       return this.$store.getters.getDataLimit
+    },
+    currentPage() {
+      return this.$store.state.currentPage
     },
     maxDataLimit() {
       return this.$store.getters.getMaxDataLimit
@@ -116,8 +110,8 @@ export default {
   data() {
     return {
       isPaginated: true,
-      currentPage: 1,
-      perPage: 100
+      perPage: 100,
+      loading: false
     }
   },
   methods: {
@@ -128,10 +122,11 @@ export default {
           let newLimit = this.dataLimit + 1000
           this.$store.dispatch('callMeteor', {
               limit: newLimit,
-              offset: 0
+              offset: 0,
+              page: page
             })
         }
-      }
+      } 
     }
   }
 }

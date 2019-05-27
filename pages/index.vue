@@ -6,7 +6,7 @@
       class="container is-fullheight"
     >
       <SearchBar />
-      <SearchResults :meteor="meteorData" /> 
+      <SearchResults :meteor="meteorData" :searchState="searchState" /> 
     </div>
   </section>
 </template>
@@ -25,12 +25,16 @@ export default {
     },
     resultSearch() {
       return this.$store.getters.getNoResult
+    },
+    searchState() {
+      return this.$store.state.isSearch
     }
   },
   async fetch({ store }) {
     await store.dispatch("callMeteor",
      { limit: store.state.limit,
-       offset: 0
+       offset: 0,
+       page: 1
      }
     )
   }
