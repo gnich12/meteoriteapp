@@ -91,9 +91,6 @@ export default {
   props: {
     meteor: {
       type: Array
-    },
-    searchState: {
-      type: Object
     }
   },
   computed: {
@@ -110,8 +107,7 @@ export default {
   data() {
     return {
       isPaginated: true,
-      perPage: 100,
-      loading: false
+      perPage: 100
     }
   },
   methods: {

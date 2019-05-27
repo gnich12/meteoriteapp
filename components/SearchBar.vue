@@ -77,7 +77,7 @@ export default {
       }
     },
     validator(term) {
-      let patt = /^\w+$/
+      let patt = /^\w+( +\w+)*$/
       if (term === '' || patt.test(term) === false) {
         return false
       } else {

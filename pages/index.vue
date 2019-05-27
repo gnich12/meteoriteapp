@@ -6,7 +6,7 @@
       class="container is-fullheight"
     >
       <SearchBar />
-      <SearchResults :meteor="meteorData" :searchState="searchState" /> 
+      <SearchResults :meteor="meteorData" /> 
     </div>
   </section>
 </template>
@@ -42,10 +42,4 @@ export default {
 </script>
 
 <style>
-/* *:not(path):not(g) {
-color: hsla(210, 100%, 100%, 0.9) !important;
-background: hsla(210, 100%,  50%, 0.5) !important;
-outline: solid 0.25rem hsla(210, 100%, 100%, 0.5) !important;
-box-shadow: none !important;
-} */
 </style>
